@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
+use App\Models\Patient;
 use App\Models\Test;
 use Illuminate\Http\Response;
+use Phpml\Classification\NaiveBayes;
 
 class TestController extends Controller
 {
@@ -16,8 +18,13 @@ class TestController extends Controller
      */
     public function index()
     {
+        $correct = Test::where('is_correct', 1)->count();
+        $all = Test::count();
+        $all != 0 ?  $accuracy = ($correct / $all) * 100 : $accuracy = 0;
+
         return response()->json([
             'status' => 200,
+            'accuracy' => round($accuracy) . '%',
             'data' => Test::all()
         ], Response::HTTP_OK);
     }
@@ -40,7 +47,37 @@ class TestController extends Controller
      */
     public function store(StoreTestRequest $request)
     {
+        $classifier = new NaiveBayes();
+        $samples = [];
+        $labels = [];
+        $patients = Patient::all();
+        foreach ($patients as $key => $value) {
+            $sample = [];
+            for ($i = 1; $i <= 9; $i++) {
+                $x = "x" . $i;
+                array_push($sample, $value->$x);
+            }
+            array_push($samples, $sample);
+            array_push($labels, $value->label_from_disease_id);
+        }
+        $classifier->train($samples, $labels);
+
+
+        $predicts = [];
+        $predict = [];
+        for ($i = 1; $i <= 9; $i++) {
+            $x = "x" . $i;
+            array_push($predict, $request->$x);
+        }
+        array_push($predicts, $predict);
+
+        $result = $classifier->predict($predicts);
+        $label = $request->label_from_disease_id;
+
         $data  = [
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'age' => $request->age,
             'x1' => $request->x1,
             'x2' => $request->x2,
             'x3' => $request->x3,
@@ -50,8 +87,9 @@ class TestController extends Controller
             'x7' => $request->x7,
             'x8' => $request->x8,
             'x9' => $request->x9,
-            'label_from_disease_id' => $request->label_from_disease_id,
-            'result_from_disease_id' => $request->result_from_disease_id
+            'label_from_disease_id' => $label,
+            'result_from_disease_id' => $result,
+            'is_correct' => $label == $request ? 1 : 0
         ];
 
         Test::create($data);
@@ -97,26 +135,7 @@ class TestController extends Controller
      */
     public function update(UpdateTestRequest $request, Test $test)
     {
-        $data  = [
-            'x1' => $request->x1,
-            'x2' => $request->x2,
-            'x3' => $request->x3,
-            'x4' => $request->x4,
-            'x5' => $request->x5,
-            'x6' => $request->x6,
-            'x7' => $request->x7,
-            'x8' => $request->x8,
-            'x9' => $request->x9,
-            'label_from_disease_id' => $request->label_from_disease_id,
-            'result_from_disease_id' => $request->result_from_disease_id
-        ];
-        Test::find($test->id)->update($data);
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Berhasil ubah data tes',
-            'data' => $data
-        ], Response::HTTP_OK);
+        //
     }
 
     /**

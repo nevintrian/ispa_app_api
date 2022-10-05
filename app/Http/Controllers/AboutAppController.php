@@ -93,7 +93,7 @@ class AboutAppController extends Controller
             'title' => $request->title,
             'description' => $request->description,
         ];
-        AboutAppFactory::find($aboutApp->id)->update($data);
+        AboutApp::find($aboutApp->id)->update($data);
 
         return response()->json([
             'status' => 200,

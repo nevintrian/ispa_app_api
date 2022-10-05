@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('gender');
+            $table->integer('age');
             $table->boolean('x1');
             $table->boolean('x2');
             $table->boolean('x3');
@@ -26,6 +29,7 @@ return new class extends Migration
             $table->boolean('x9');
             $table->integer('label_from_disease_id');
             $table->integer('result_from_disease_id');
+            $table->boolean('is_correct');
             $table->timestamps();
         });
     }

@@ -16,6 +16,9 @@ class TestSeeder extends Seeder
     public function run()
     {
         Test::create([
+            'name' => 'Linda Sumanti',
+            'gender' => 'Perempuan',
+            'age' => 14,
             'x1' => 0,
             'x2' => 0,
             'x3' => 0,
@@ -26,10 +29,14 @@ class TestSeeder extends Seeder
             'x8' => 0,
             'x9' => 0,
             'label_from_disease_id' => 3,
-            'result_from_disease_id' => 3
+            'result_from_disease_id' => 3,
+            'is_correct' => 1
         ]);
 
         Test::create([
+            'name' => 'Brian Vidyanjaya',
+            'gender' => 'Laki laki',
+            'age' => 13,
             'x1' => 1,
             'x2' => 0,
             'x3' => 1,
@@ -40,10 +47,14 @@ class TestSeeder extends Seeder
             'x8' => 0,
             'x9' => 1,
             'label_from_disease_id' => 2,
-            'result_from_disease_id' => 2
+            'result_from_disease_id' => 2,
+            'is_correct' => 1
         ]);
 
         Test::create([
+            'name' => 'Brian Vidyanjaya',
+            'gender' => 'Laki laki',
+            'age' => 13,
             'x1' => 1,
             'x2' => 1,
             'x3' => 1,
@@ -54,7 +65,8 @@ class TestSeeder extends Seeder
             'x8' => 1,
             'x9' => 1,
             'label_from_disease_id' => 1,
-            'result_from_disease_id' => 1
+            'result_from_disease_id' => 1,
+            'is_correct' => 1
         ]);
     }
 }
