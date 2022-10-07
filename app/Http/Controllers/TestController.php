@@ -18,13 +18,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        $correct = Test::where('is_correct', 1)->count();
-        $all = Test::count();
-        $all != 0 ?  $accuracy = ($correct / $all) * 100 : $accuracy = 0;
-
         return response()->json([
             'status' => 200,
-            'accuracy' => round($accuracy) . '%',
             'data' => Test::all()
         ], Response::HTTP_OK);
     }

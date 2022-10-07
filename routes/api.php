@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AboutDiseaseController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PatientController;
@@ -31,3 +32,4 @@ Route::apiResource('/diseases', DiseaseController::class);
 Route::apiResource('/tests', TestController::class);
 Route::apiResource('/about_apps', AboutAppController::class);
 Route::apiResource('/about_diseases', AboutDiseaseController::class);
+Route::get('/dashboard', [DashboardController::class, 'index']);

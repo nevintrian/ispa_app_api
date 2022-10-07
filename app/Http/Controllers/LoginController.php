@@ -14,28 +14,30 @@ class LoginController extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        $user_query = User::where('email', $email)->first();
+        $user_query = User::where('email', $email);
         if ($user_query->exists()) {
-            if (Hash::check($password, $user_query->password)) {
+            if (Hash::check($password, $user_query->first()->password)) {
                 return response()->json([
                     'status' => 200,
                     'message' => 'Berhasil login',
                     'data' => [
+                        'id' => $user_query->first()->id,
                         'email' => $email,
+                        'name' => $user_query->first()->name
                     ]
                 ], Response::HTTP_OK);
-                return response()->json([
-                    'status' => 422,
-                    'message' => 'Email atau password salah',
-                    'data' => [
-                        'email' => $email,
-                    ]
-                ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
+            return response()->json([
+                'status' => 422,
+                'message' => 'Email atau password salah',
+                'data' => [
+                    'email' => $email,
+                ]
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         return response()->json([
             'status' => 422,
-            'message' => 'Username atau password tidak terdaftar',
+            'message' => 'Email atau password tidak terdaftar',
             'data' => [
                 'email' => $email,
             ]
