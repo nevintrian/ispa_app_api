@@ -42,6 +42,9 @@ class DiseaseController extends Controller
     {
         $data  = [
             'name' => $request->name,
+            'definition' => $request->definition,
+            'cause' => $request->cause,
+            'therapy' => $request->therapy,
         ];
 
         Disease::create($data);
@@ -89,6 +92,9 @@ class DiseaseController extends Controller
     {
         $data  = [
             'name' => $request->name,
+            'definition' => $request->definition,
+            'cause' => $request->cause,
+            'therapy' => $request->therapy,
         ];
         Disease::find($disease->id)->update($data);
 
