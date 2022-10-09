@@ -19,7 +19,7 @@ class PatientController extends Controller
     {
         return response()->json([
             'status' => 200,
-            'data' => Patient::all()
+            'data' => Patient::with('disease')->get()
         ], Response::HTTP_OK);
     }
 

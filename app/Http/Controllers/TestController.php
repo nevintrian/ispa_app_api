@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
+use App\Models\Disease;
 use App\Models\Patient;
 use App\Models\Test;
 use Illuminate\Http\Response;
@@ -20,7 +21,7 @@ class TestController extends Controller
     {
         return response()->json([
             'status' => 200,
-            'data' => Test::all()
+            'data' => Test::with('disease')->get()
         ], Response::HTTP_OK);
     }
 
@@ -66,8 +67,11 @@ class TestController extends Controller
         }
         array_push($predicts, $predict);
 
-        $result = $classifier->predict($predicts);
+        $result = $classifier->predict($predicts)[0];
         $label = $request->label_from_disease_id;
+
+        $disease_label = Disease::find($label);
+        $disease_result = Disease::find($result);
 
         $data  = [
             'name' => $request->name,
@@ -88,6 +92,9 @@ class TestController extends Controller
         ];
 
         Test::create($data);
+
+        $data['disease_label'] = $disease_label;
+        $data['disease_result'] = $disease_result;
 
         return response()->json([
             'status' => 201,
