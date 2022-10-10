@@ -14,7 +14,7 @@ class Test extends Model
         'id'
     ];
 
-    public function disease(): BelongsTo
+    public function disease_label(): BelongsTo
     {
         return $this->belongsTo(Disease::class, 'result_from_disease_id', 'id');
     }

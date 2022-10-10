@@ -21,7 +21,7 @@ class TestController extends Controller
     {
         return response()->json([
             'status' => 200,
-            'data' => Test::with('disease')->get()
+            'data' => Test::with('disease_label')->get()
         ], Response::HTTP_OK);
     }
 
