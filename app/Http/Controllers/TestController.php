@@ -21,7 +21,7 @@ class TestController extends Controller
     {
         return response()->json([
             'status' => 200,
-            'data' => Test::with('disease_label')->get()
+            'data' => Test::with('disease_label')->with('disease_result')->get()
         ], Response::HTTP_OK);
     }
 
@@ -111,9 +111,10 @@ class TestController extends Controller
      */
     public function show(Test $test)
     {
+
         return response()->json([
             'status' => 200,
-            'data' => Test::find($test->id)
+            'data' => Test::with('disease_label')->with('disease_result')->find($test->id)
         ], Response::HTTP_OK);
     }
 

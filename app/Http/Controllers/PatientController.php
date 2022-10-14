@@ -76,7 +76,7 @@ class PatientController extends Controller
     {
         return response()->json([
             'status' => 200,
-            'data' => Patient::find($patient->id)
+            'data' => Patient::with('disease_label')->find($patient->id)
         ], Response::HTTP_OK);
     }
 
