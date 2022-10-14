@@ -88,7 +88,7 @@ class TestController extends Controller
             'x9' => $request->x9,
             'label_from_disease_id' => $label,
             'result_from_disease_id' => $result,
-            'is_correct' => $label == $request ? 1 : 0
+            'is_correct' => $label == $result ? 1 : 0
         ];
 
         Test::create($data);
@@ -138,7 +138,64 @@ class TestController extends Controller
      */
     public function update(UpdateTestRequest $request, Test $test)
     {
-        //
+        $classifier = new NaiveBayes();
+        $samples = [];
+        $labels = [];
+        $patients = Patient::all();
+        foreach ($patients as $key => $value) {
+            $sample = [];
+            for ($i = 1; $i <= 9; $i++) {
+                $x = "x" . $i;
+                array_push($sample, $value->$x);
+            }
+            array_push($samples, $sample);
+            array_push($labels, $value->label_from_disease_id);
+        }
+        $classifier->train($samples, $labels);
+
+
+        $predicts = [];
+        $predict = [];
+        for ($i = 1; $i <= 9; $i++) {
+            $x = "x" . $i;
+            array_push($predict, $request->$x);
+        }
+        array_push($predicts, $predict);
+
+        $result = $classifier->predict($predicts)[0];
+        $label = $request->label_from_disease_id;
+
+        $disease_label = Disease::find($label);
+        $disease_result = Disease::find($result);
+
+        $data  = [
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'x1' => $request->x1,
+            'x2' => $request->x2,
+            'x3' => $request->x3,
+            'x4' => $request->x4,
+            'x5' => $request->x5,
+            'x6' => $request->x6,
+            'x7' => $request->x7,
+            'x8' => $request->x8,
+            'x9' => $request->x9,
+            'label_from_disease_id' => $label,
+            'result_from_disease_id' => $result,
+            'is_correct' => $label == $result ? 1 : 0
+        ];
+
+        Test::find($test->id)->update($data);
+
+        $data['disease_label'] = $disease_label;
+        $data['disease_result'] = $disease_result;
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Berhasil ubah data tes',
+            'data' => $data
+        ], Response::HTTP_OK);
     }
 
     /**
