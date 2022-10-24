@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('gender');
-            $table->integer('age');
+            $table->integer('age_year');
+            $table->integer('age_month');
             $table->boolean('x1');
             $table->boolean('x2');
             $table->boolean('x3');

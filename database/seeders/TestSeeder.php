@@ -18,7 +18,8 @@ class TestSeeder extends Seeder
         Test::create([
             'name' => 'Linda Sumanti',
             'gender' => 'Perempuan',
-            'age' => 14,
+            'age_year' => 14,
+            'age_month' => 3,
             'x1' => 0,
             'x2' => 0,
             'x3' => 0,
@@ -36,7 +37,8 @@ class TestSeeder extends Seeder
         Test::create([
             'name' => 'Brian Vidyanjaya',
             'gender' => 'Laki laki',
-            'age' => 13,
+            'age_year' => 13,
+            'age_month' => 2,
             'x1' => 1,
             'x2' => 0,
             'x3' => 1,
@@ -54,7 +56,8 @@ class TestSeeder extends Seeder
         Test::create([
             'name' => 'Brian Vidyanjaya',
             'gender' => 'Laki laki',
-            'age' => 13,
+            'age_year' => 12,
+            'age_month' => 1,
             'x1' => 1,
             'x2' => 1,
             'x3' => 1,

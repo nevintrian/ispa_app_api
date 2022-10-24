@@ -49,7 +49,8 @@ class TestHomeController extends Controller
         $data  = [
             'name' => $request->name,
             'gender' => $request->gender,
-            'age' => $request->age,
+            'age_year' => $request->age_year,
+            'age_month' => $request->age_month,
             'x1' => $request->x1,
             'x2' => $request->x2,
             'x3' => $request->x3,
