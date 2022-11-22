@@ -11,10 +11,10 @@ class LoginController extends Controller
 {
     public function index(Request $request)
     {
-        $email = $request->email;
+        $username = $request->username;
         $password = $request->password;
 
-        $user_query = User::where('email', $email);
+        $user_query = User::where('username', $username);
         if ($user_query->exists()) {
             if (Hash::check($password, $user_query->first()->password)) {
                 return response()->json([
@@ -22,24 +22,24 @@ class LoginController extends Controller
                     'message' => 'Berhasil login',
                     'data' => [
                         'id' => $user_query->first()->id,
-                        'email' => $email,
+                        'username' => $username,
                         'name' => $user_query->first()->name
                     ]
                 ], Response::HTTP_OK);
             }
             return response()->json([
                 'status' => 422,
-                'message' => 'Email atau password salah',
+                'message' => 'Username atau password salah',
                 'data' => [
-                    'email' => $email,
+                    'username' => $username,
                 ]
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         return response()->json([
             'status' => 422,
-            'message' => 'Email atau password tidak terdaftar',
+            'message' => 'Username atau password tidak terdaftar',
             'data' => [
-                'email' => $email,
+                'username' => $username,
             ]
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
