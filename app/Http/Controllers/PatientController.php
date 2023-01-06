@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
+use App\Imports\PatientImport;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PatientController extends Controller
 {
@@ -139,6 +141,16 @@ class PatientController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'Berhasil hapus data pasien',
+        ], Response::HTTP_OK);
+    }
+
+    public function import()
+    {
+        Excel::import(new PatientImport, public_path('excel/patient_data.xlsx'));
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Berhasil import data pasien',
         ], Response::HTTP_OK);
     }
 }

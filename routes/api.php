@@ -35,3 +35,4 @@ Route::apiResource('/about_apps', AboutAppController::class);
 Route::apiResource('/about_diseases', AboutDiseaseController::class);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::post('/test', [TestHomeController::class, 'store']);
+Route::get('/import', [PatientController::class, 'import']);
