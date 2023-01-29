@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Disease;
 use App\Models\Patient;
 use App\Models\Test;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Phpml\Classification\NaiveBayes;
@@ -61,8 +62,12 @@ class TestHomeController extends Controller
             'x8' => $request->x8,
             'x9' => $request->x9,
             'result_from_disease_id' => $result,
-            'disease_result' => $disease_result
+
         ];
+
+        // Visitor::create($data);
+
+        // $data['disease_result'] = $disease_result;
 
         return response()->json([
             'status' => 200,

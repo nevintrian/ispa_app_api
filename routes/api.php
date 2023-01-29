@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestHomeController;
+use App\Http\Controllers\VisitorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::apiResource('/diseases', DiseaseController::class);
 Route::apiResource('/tests', TestController::class);
 Route::apiResource('/about_apps', AboutAppController::class);
 Route::apiResource('/about_diseases', AboutDiseaseController::class);
+Route::apiResource('/visitors', VisitorController::class);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::post('/test', [TestHomeController::class, 'store']);
 Route::get('/import', [PatientController::class, 'import']);
