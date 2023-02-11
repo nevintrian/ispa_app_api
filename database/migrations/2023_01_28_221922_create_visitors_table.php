@@ -15,20 +15,23 @@ return new class extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
+            $table->string('nik');
+            $table->string('password');
             $table->string('name');
             $table->string('gender');
-            $table->integer('age_year');
-            $table->integer('age_month');
-            $table->boolean('x1');
-            $table->boolean('x2');
-            $table->boolean('x3');
-            $table->boolean('x4');
-            $table->boolean('x5');
-            $table->boolean('x6');
-            $table->boolean('x7');
-            $table->boolean('x8');
-            $table->boolean('x9');
-            $table->integer('result_from_disease_id');
+            $table->integer('age_year')->nullable();
+            $table->integer('age_month')->nullable();
+            $table->date('date_birth')->nullable();
+            $table->boolean('x1')->nullable();
+            $table->boolean('x2')->nullable();
+            $table->boolean('x3')->nullable();
+            $table->boolean('x4')->nullable();
+            $table->boolean('x5')->nullable();
+            $table->boolean('x6')->nullable();
+            $table->boolean('x7')->nullable();
+            $table->boolean('x8')->nullable();
+            $table->boolean('x9')->nullable();
+            $table->integer('result_from_disease_id')->nullable();
             $table->timestamps();
         });
     }

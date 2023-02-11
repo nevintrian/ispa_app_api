@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
-class LoginController extends Controller
+class LoginVisitorController extends Controller
 {
     public function index(Request $request)
     {
-        $username = $request->username;
+        $nik = $request->nik;
         $password = $request->password;
 
-        $user_query = User::where('username', $username);
+        $user_query = Visitor::where('nik', $nik);
         if ($user_query->exists()) {
             if (Hash::check($password, $user_query->first()->password)) {
                 return response()->json([
@@ -22,25 +23,27 @@ class LoginController extends Controller
                     'message' => 'Berhasil login',
                     'data' => [
                         'id' => $user_query->first()->id,
-                        'username' => $username,
+                        'nik' => $nik,
                         'name' => $user_query->first()->name,
-                        'status' => 'admin'
+                        'date_birth' => $user_query->first()->date_birth,
+                        'gender' => $user_query->first()->gender,
+                        'status' => 'visitor'
                     ]
                 ], Response::HTTP_OK);
             }
             return response()->json([
                 'status' => 422,
-                'message' => 'Username atau password salah',
+                'message' => 'nik atau password salah',
                 'data' => [
-                    'username' => $username,
+                    'nik' => $nik,
                 ]
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         return response()->json([
             'status' => 422,
-            'message' => 'Username atau password tidak terdaftar',
+            'message' => 'nik atau password tidak terdaftar',
             'data' => [
-                'username' => $username,
+                'nik' => $nik,
             ]
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }

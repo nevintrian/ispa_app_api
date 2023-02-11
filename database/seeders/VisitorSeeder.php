@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Visitor;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class VisitorSeeder extends Seeder
 {
@@ -16,6 +17,14 @@ class VisitorSeeder extends Seeder
     public function run()
     {
         Visitor::create([
+            'nik' => '41182107',
+            'password' => Hash::make('password'),
+            'name' => 'Brian Vidyanjaya',
+            'gender' => 'Laki laki',
+        ]);
+        Visitor::create([
+            'nik' => '41182107',
+            'password' => Hash::make('password'),
             'name' => 'Brian Vidyanjaya',
             'gender' => 'Laki laki',
             'age_year' => 13,

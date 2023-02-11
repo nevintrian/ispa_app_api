@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('gender');
             $table->integer('age_year');
             $table->integer('age_month');
+            $table->date('date_birth')->nullable();
             $table->boolean('x1');
             $table->boolean('x2');
             $table->boolean('x3');

@@ -76,8 +76,9 @@ class TestController extends Controller
         $data  = [
             'name' => $request->name,
             'gender' => $request->gender,
-            'age_year' => $request->age_year,
-            'age_month' => $request->age_month,
+            'age_year' => $request->age_year ?? '',
+            'age_month' => $request->age_month ?? '',
+            'date_birth' => $request->date_birth,
             'x1' => $request->x1,
             'x2' => $request->x2,
             'x3' => $request->x3,
@@ -172,8 +173,9 @@ class TestController extends Controller
         $data  = [
             'name' => $request->name,
             'gender' => $request->gender,
-            'age_year' => $request->age_year,
-            'age_month' => $request->age_month,
+            'age_year' => $request->age_year ?? '',
+            'age_month' => $request->age_month ?? '',
+            'date_birth' => $request->date_birth,
             'x1' => $request->x1,
             'x2' => $request->x2,
             'x3' => $request->x3,

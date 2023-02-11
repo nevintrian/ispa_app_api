@@ -6,6 +6,7 @@ use App\Http\Requests\StoreVisitorRequest;
 use App\Http\Requests\UpdateVisitorRequest;
 use App\Models\Visitor;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 
 class VisitorController extends Controller
 {
@@ -18,7 +19,20 @@ class VisitorController extends Controller
     {
         return response()->json([
             'status' => 200,
-            'data' => Visitor::all()
+            'data' => Visitor::whereNull('result_from_disease_id')->get()
+        ], Response::HTTP_OK);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function nik($nik)
+    {
+        return response()->json([
+            'status' => 200,
+            'data' => Visitor::where('nik', $nik)->whereNotNull('result_from_disease_id')->get()
         ], Response::HTTP_OK);
     }
 
@@ -40,7 +54,20 @@ class VisitorController extends Controller
      */
     public function store(StoreVisitorRequest $request)
     {
-        //
+        $data  = [
+            'name' => $request->name,
+            'nik' => $request->nik,
+            'gender' => $request->gender,
+            'date_birth' => $request->date_birth,
+            'password' => Hash::make($request->password),
+        ];
+
+        Visitor::create($data);
+        return response()->json([
+            'status' => 201,
+            'message' => 'Berhasil daftar pengunjung',
+            'data' => $request->all()
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -77,7 +104,27 @@ class VisitorController extends Controller
      */
     public function update(UpdateVisitorRequest $request, Visitor $visitor)
     {
-        //
+        if ($request->status == "true") {
+            $data  = [
+                'name' => $request->name,
+                'gender' => $request->gender,
+                'date_birth' => $request->date_birth,
+                'password' => Hash::make($request->password),
+            ];
+        } else {
+            $data  = [
+                'name' => $request->name,
+                'gender' => $request->gender,
+                'date_birth' => $request->date_birth,
+            ];
+        }
+
+        Visitor::where('nik', $request->nik)->update($data);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Berhasil ubah profil',
+            'data' => $request->all()
+        ], Response::HTTP_CREATED);
     }
 
     /**

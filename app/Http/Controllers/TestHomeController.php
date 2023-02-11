@@ -47,11 +47,13 @@ class TestHomeController extends Controller
         $result = $classifier->predict($predicts)[0];
         $disease_result = Disease::find($result);
 
+
         $data  = [
             'name' => $request->name,
             'gender' => $request->gender,
-            'age_year' => $request->age_year,
-            'age_month' => $request->age_month,
+            'age_year' => $request->age_year ?? 0,
+            'age_month' => $request->age_month ?? 0,
+            'date_birth' => $request->date_birth,
             'x1' => $request->x1,
             'x2' => $request->x2,
             'x3' => $request->x3,
@@ -65,9 +67,15 @@ class TestHomeController extends Controller
 
         ];
 
-        // Visitor::create($data);
+        if ($request->status == "true") {
+            $old_password = Visitor::where('nik', $request->nik)->first()->password;
+            $data['nik'] = $$request->nik;
+            $data['password'] = $old_password;
+            Visitor::create($data);
+        }
 
-        // $data['disease_result'] = $disease_result;
+
+        $data['disease_result'] = $disease_result;
 
         return response()->json([
             'status' => 200,
