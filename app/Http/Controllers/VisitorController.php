@@ -102,7 +102,7 @@ class VisitorController extends Controller
      * @param  \App\Models\Visitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVisitorRequest $request, Visitor $visitor)
+    public function update(UpdateVisitorRequest $request)
     {
         if ($request->status == "true") {
             $data  = [

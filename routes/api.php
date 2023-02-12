@@ -38,6 +38,7 @@ Route::apiResource('/about_apps', AboutAppController::class);
 Route::apiResource('/about_diseases', AboutDiseaseController::class);
 Route::apiResource('/visitors', VisitorController::class);
 Route::get('/visitor_nik/{nik}', [VisitorController::class, 'nik']);
+Route::post('/visitor_update', [VisitorController::class, 'update']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::post('/test', [TestHomeController::class, 'store']);
 Route::get('/import', [PatientController::class, 'import']);
